@@ -23,29 +23,36 @@
             </a>
 
             <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link">
-                    User name
-                </a>
 
-                <div class="navbar-dropdown">
-                    <a class="navbar-item">
-                        Profile page
-                    </a>
-                    <a class="navbar-item">
-                        Create a new ad
-                    </a>
-                    <hr class="navbar-divider">
-                    <a class="navbar-item">
-                        Disconnect
-                    </a>
-                </div>
             </div>
         </div>
 
         <div class="navbar-end">
+            <?php
+                if (isset($_SESSION)) {
+                    ?>
+            <a class="navbar-link">
+                User name
+            </a>
+
+            <div class="navbar-dropdown">
+                <a class="navbar-item">
+                    Profile page
+                </a>
+                <a class="navbar-item">
+                    Create a new ad
+                </a>
+                <hr class="navbar-divider">
+                <a class="navbar-item">
+                    Disconnect
+                </a>
+            </div>
+            <?php
+                } else {
+            ?>
             <div class="navbar-item">
                 <div class="buttons">
-                    <a class="button is-primary">
+                    <a class="button is-primary" href="signin.php">
                         <strong>Sign up</strong>
                     </a>
                     <a class="button is-light">
@@ -53,6 +60,9 @@
                     </a>
                 </div>
             </div>
+            }
+
+
         </div>
     </div>
 </nav>
