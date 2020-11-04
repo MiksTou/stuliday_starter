@@ -1,6 +1,5 @@
 <?php
 require 'includes/header.php';
-require 'includes/functions.php';
 // REGISTER -------------------
 
 if (!empty($_POST['email_signup']) && !empty($_POST['password1_signup']) && !empty($_POST['username_signup']) && isset($_POST['submit_signup'])) {
@@ -22,6 +21,7 @@ if (!empty($_POST['email_signup']) && !empty($_POST['password1_signup']) && !emp
         unset($_POST);
     }
 }
+
 ?>
 
 <div class="container">

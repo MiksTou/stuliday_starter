@@ -1,6 +1,7 @@
 <?php
 
 require 'includes/header.php';
+var_dump($_SESSION);
 
 // if (!isset($content)) {
 //     $content = '

@@ -1,6 +1,6 @@
 <?php
 
-require 'config.php';
+require 'includes/config.php';
 
 function register($email, $username, $password1, $password2)
 {
@@ -44,12 +44,13 @@ function login($email, $password)
     global $conn;
 
     try {
-        $sql = "SELECT * FROM users WHERE email = '{email}'";
+        $sql = "SELECT * FROM users WHERE email = '{$email}'";
         $res = $conn->query($sql);
         $user = $res->fetch(PDO::FETCH_ASSOC);
         if ($user) {
             $db_password = $user['password'];
             if (password_verify($password, $db_password)) {
+                var_dump($password);
                 $_SESSION['id'] = $user['id'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['username'] = $user['username'];
@@ -66,52 +67,49 @@ function login($email, $password)
     } catch (PDOException $e) {
         echo 'Error : '.$e->getMessage();
     }
+    var_dump($_SESSION);
 }
-//     if (!empty($_POST['submit_login']) && !empty($_POST['email_login']) && !empty($_POST['password_login'])) {
-//         $pass_login = htmlspecialchars($_POST['password_login']);
-//         $email_login = htmlspecialchars($_POST['email_login']);
 
-//         $sql = "SELECT * FROM users WHERE email = '{$email_login}'";
-//         $res = $conn->query($sql);
-//         $user = $res->fetch(PDO::FETCH_ASSOC);
-//         if ($user) {
-//             $db_pass = $user['password'];
-//             if (password_verify($pass_login, $db_pass)) {
-//                 $_SESSION['email'] = $user['email'];
-//                 $_SESSION['id'] = $user['id'];
-//                 header('Location: index.php');
-//             } else {
-//                 echo '<div class="notification is-danger is-light">
-//                 <button class="delete"></button>
-//                 Mot de passe erroné
-//             </div>';
-//             }
-//         } else {
-//             echo '<div class="notification is-danger is-light">
-//                 <button class="delete"></button>
-//                 Cet utilisateur n\'existe pas
-//             </div>';
-//         }
-//     }
-// }
-function affichage()
+function affichageAdverts()
 {
     global $conn;
-    $sth = $conn->prepare('SELECT * FROM users');
+    $sth = $conn->prepare('SELECT * FROM adverts');
     $sth->execute();
-    $users = $sth->fetchAll(PDO::FETCH_ASSOC);
-    foreach ($users as $user) {
+    $adverts = $sth->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($adverts as $advert) {
         ?>
 <tr>
-    <th scope="row"><?php echo $user['id']; ?>
-        </td>
-    <td><?php echo $user['email']; ?>
+    <th scope="row"><?php echo $advert['ad_id']; ?>
+    </th>
+    <td><?php echo $advert['title']; ?>
     </td>
-    <td><?php echo $user['username']; ?>
+    <td><?php echo $advert['content']; ?>
     </td>
-    <td><?php echo $user['password']; ?>
+    <td><?php echo $advert['address']; ?>
+    </td>
+    <td><?php echo $advert['city']; ?>
+    </td>
+    <td><?php echo $advert['price']; ?>
+    </td>
+    <td><?php echo $advert['images']; ?>
+    </td>
+    <td><?php echo $advert['author']; ?>
     </td>
 </tr>
+<?php
+    }
+}
+
+function affichageReservation($fullname, $email, $phone, $message)
+{
+    global $conn;
+    $sth = $conn->prepare('SELECT * from reservations');
+    $sth->execute();
+    $reservations = $sth->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($reservations as $reservation) {
+        ?>
+
+
 <?php
     }
 }

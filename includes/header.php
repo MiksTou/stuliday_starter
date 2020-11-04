@@ -1,4 +1,4 @@
-<?php require 'includes/config.php'; ?>
+<?php require 'includes/functions.php'; ?>
 
 <!DOCTYPE html>
 <html>
@@ -33,15 +33,45 @@
           Home
         </a>
 
-        <a class="navbar-item">
-          Places to stay
-        </a>
       </div>
 
       <div class="navbar-end">
         <?php
             if (!empty($_SESSION)) {
-                var_dump($_SESSION); ?>
+                ?>
+
+
+        <!-- <div class="navbar-dropdown">
+            <a class="navbar-item" href="aderts.php">
+              Vos annonces
+            </a>
+            <a class="navbar-item" href="#">
+              Créer une annonce
+            </a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" href="reservations.php">
+              Réservation d'un objet
+            </a>
+          </div>
+        </div> -->
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-item" href="adverts.php">
+            Vos annonces
+          </a>
+
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">
+              Créer une annonce
+            </a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" href="reservations.php">
+              Réservation d'un objet
+            </a>
+          </div>
+        </div>
+
+
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
             User name
