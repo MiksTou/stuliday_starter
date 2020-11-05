@@ -78,24 +78,32 @@ function affichageAdverts()
     $adverts = $sth->fetchAll(PDO::FETCH_ASSOC);
     foreach ($adverts as $advert) {
         ?>
-<tr>
-    <th scope="row"><?php echo $advert['ad_id']; ?>
-    </th>
-    <td><?php echo $advert['title']; ?>
-    </td>
-    <td><?php echo $advert['content']; ?>
-    </td>
-    <td><?php echo $advert['address']; ?>
-    </td>
-    <td><?php echo $advert['city']; ?>
-    </td>
-    <td><?php echo $advert['price']; ?>
-    </td>
-    <td><?php echo $advert['images']; ?>
-    </td>
-    <td><?php echo $advert['author']; ?>
-    </td>
-</tr>
+
+
+<table class="table table-cell-heading-color">
+    <thead>
+        <tr>
+            <th scope="row"><?php echo $advert['ad_id']; ?>
+            </th>
+            <td><?php echo $advert['title']; ?>
+            </td>
+            <td><?php echo $advert['content']; ?>
+            </td>
+            <td><?php echo $advert['address']; ?>
+            </td>
+            <td><?php echo $advert['city']; ?>
+            </td>
+            <td><?php echo $advert['price']; ?>
+            </td>
+            <td><?php echo $advert['images']; ?>
+            </td>
+            <td><?php echo $advert['author']; ?>
+            </td>
+        </tr>
+    </thead>
+</table>
+
+
 <?php
     }
 }
