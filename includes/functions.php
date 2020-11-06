@@ -77,46 +77,123 @@ function affichageAdverts()
     $sth->execute();
     $adverts = $sth->fetchAll(PDO::FETCH_ASSOC);
     foreach ($adverts as $advert) {
-        ?>
+        $title = $advert['title'];
+        $content = $advert['content'];
+        $adress = $advert['address'];
+        $city = $advert['city'];
+        $price = $advert['price'];
+        $images = $advert['images'];
+        $author = $advert['author']; ?>
 
 
-<table class="table table-cell-heading-color">
-    <thead>
-        <tr>
-            <th scope="row"><?php echo $advert['ad_id']; ?>
-            </th>
-            <td><?php echo $advert['title']; ?>
-            </td>
-            <td><?php echo $advert['content']; ?>
-            </td>
-            <td><?php echo $advert['address']; ?>
-            </td>
-            <td><?php echo $advert['city']; ?>
-            </td>
-            <td><?php echo $advert['price']; ?>
-            </td>
-            <td><?php echo $advert['images']; ?>
-            </td>
-            <td><?php echo $advert['author']; ?>
-            </td>
-        </tr>
-    </thead>
-</table>
+
+<div class="box">
+    <article class="media">
+        <div class="media-left">
+            <figure class="image is-64x64">
+                <img src="images/appart.jpg" alt="Image">
+            </figure>
+        </div>
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong><?php echo $title; ?></strong>
+                    <small><?php echo $author; ?></small>
+                    <small><?php echo $adress; ?></small>
+                    <strong><?php echo $city; ?></strong>
+                    <strong><?php echo $price; ?></strong>
+                    <small><?php echo $images; ?></small>
+                    <br>
+                    <?php echo $content; ?>
+                </p>
+            </div>
+            <nav class="level is-mobile">
+                <div class="level-left">
+                    <a class="level-item" aria-label="reply">
+                        <span class="icon is-small">
+                            <i class="fas fa-reply" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                    <a class="level-item" aria-label="retweet">
+                        <span class="icon is-small">
+                            <i class="fas fa-retweet" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                    <a class="level-item" aria-label="like">
+                        <span class="icon is-small">
+                            <i class="fas fa-heart" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </article>
+</div>
 
 
 <?php
     }
 }
 
-function affichageReservation($fullname, $email, $phone, $message)
+function affichageReservation()
 {
     global $conn;
     $sth = $conn->prepare('SELECT * from reservations');
     $sth->execute();
     $reservations = $sth->fetchAll(PDO::FETCH_ASSOC);
     foreach ($reservations as $reservation) {
-        ?>
+        $email = $reservation['email'];
+        $fullname = $reservation['full_name'];
+        $phone = $reservation['phone'];
+        $message = $reservation['message']; ?>
 
+<div class="box">
+    <article class="media">
+        <div class="media-left">
+            <figure class="image is-64x64">
+                <img src="images/appart.jpg" alt="Image">
+            </figure>
+        </div>
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong><?php echo $fullname; ?></strong>
+                    <small><?php echo $email; ?></small>
+                    <small><?php echo $phone; ?></small>
+
+                    <br>
+                    <?php echo $message; ?>
+                </p>
+            </div>
+
+            <div class="buttons">
+                <button class="button is-info">aVOIR</button>
+                <a href="ajoutproduit.php"><button class="button is-success">Add card</button></a>
+                <button class="button is-warning">AVOIR</button>
+                <button class="button is-danger">Delete</button>
+            </div>
+            <nav class="level is-mobile">
+                <div class="level-left">
+                    <a class="level-item" aria-label="reply">
+                        <span class="icon is-small">
+                            <i class="fas fa-reply" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                    <a class="level-item" aria-label="retweet">
+                        <span class="icon is-small">
+                            <i class="fas fa-retweet" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                    <a class="level-item" aria-label="like">
+                        <span class="icon is-small">
+                            <i class="fas fa-heart" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </article>
+</div>
 
 <?php
     }
