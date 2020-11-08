@@ -78,7 +78,7 @@
           </a>
 
           <div class="navbar-dropdown">
-            <a class="navbar-item">
+            <a class="navbar-item" href="profile.php">
               Profile page
             </a>
             <a class="navbar-item">

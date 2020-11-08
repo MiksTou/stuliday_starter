@@ -55,7 +55,7 @@ function login($email, $password)
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['username'] = $user['username'];
                 echo '<div class="alert alert-success" role="alert">Vous êtes connecté !</div>';
-                header('Location: index.php');
+                header('Location: profile.php?id=' . $_SESSION['id']);
             } else {
                 echo '<div class="alert alert-danger" role="alert">Mot de passe erroné !</div>';
                 unset($_POST);
@@ -145,7 +145,8 @@ function affichageReservation()
         $email = $reservation['email'];
         $fullname = $reservation['full_name'];
         $phone = $reservation['phone'];
-        $message = $reservation['message']; ?>
+        $message = $reservation['message']; 
+?>
 
 <div class="box">
     <article class="media">
@@ -195,6 +196,30 @@ function affichageReservation()
     </article>
 </div>
 
+<?php
+    }
+}
+
+function profilePage()
+{
+    global $conn;
+    $sth = $conn->prepare("SELECT * FROM users");
+    $sth->execute();
+    $profiles = $sth->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($profiles as $profile) {
+        $username = $profile['username'];
+        $email = $profile['email'];
+        
+?>
+
+
+<div class="content">
+
+<h3><?php echo $username ?></h3>
+<h3><?php echo $email ?></h3>
+
+
+</div>
 <?php
     }
 }
