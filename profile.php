@@ -33,7 +33,7 @@ if(isset($_GET['id']) AND $_GET['id'] > 0) {
     <?php 
         if(isset($_SESSION['id']) AND $userInfo['id'] === $_SESSION['id']) {
     ?>
-    <h4> <a href="#">Editer mon profil</a> </h4>
+    <h4> <a href="edtionprofil.php">Editer mon profil</a> </h4>
     <?php 
         } 
     ?>

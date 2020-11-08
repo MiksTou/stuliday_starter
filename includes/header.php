@@ -79,7 +79,7 @@
 
           <div class="navbar-dropdown">
             <a class="navbar-item" href="profile.php">
-              Profile page
+               Profile page
             </a>
             <a class="navbar-item">
               Create a new ad
