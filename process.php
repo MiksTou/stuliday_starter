@@ -8,7 +8,7 @@
     // Le elseif va servir au traitement du formulaire de création de produits
     } elseif (isset($_POST['product_submit'])) {
         // Vérification back-end du remplissage du formulaire
-        if (!empty($_POST['title']) && !empty($_POST['content']) && !empty($_POST['price']) && !empty($_POST['city']) && !empty(['address'])) {
+        if (!empty($_POST['nomBienAjout']) && !empty($_POST['descriptionBienAjout']) && !empty($_POST['prixBienAjout']) && !empty($_POST['villeBienAjout']) && !empty(['categorieBienAjout'])) {
             // Définition des variables
             $name = strip_tags($_POST['title']);
             $description = strip_tags($_POST['content']);
