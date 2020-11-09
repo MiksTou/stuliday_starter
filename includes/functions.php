@@ -66,8 +66,9 @@ function login($email, $password)
     } catch (PDOException $e) {
         echo 'Error : '.$e->getMessage();
     }
-    var_dump($_SESSION);
 }
+
+//AFFICHAGE
 
 function affichageAdverts()
 {
@@ -105,6 +106,13 @@ function affichageAdverts()
                     <br>
                     <?php echo $content; ?>
                 </p>
+            </div>
+
+            <div class="buttons">
+                <button class="button is-info">View Adverts</button>
+                <a href="advertsAdd.php"><button class="button is-success">Add Adverts</button></a>
+               <a href="advertsEdit.php"><button class="button is-warning">Edit Adverts</button></a> 
+               <a href="advertsSupp.php"><button class="button is-danger">Delete Adverts</button></a> 
             </div>
             <nav class="level is-mobile">
                 <div class="level-left">
@@ -167,10 +175,10 @@ function affichageReservation()
             </div>
 
             <div class="buttons">
-                <button class="button is-info">aVOIR</button>
-                <a href="ajoutproduit.php"><button class="button is-success">Add card</button></a>
-                <button class="button is-warning">AVOIR</button>
-                <button class="button is-danger">Delete</button>
+                <button class="button is-info">View reservations</button>
+                <a href="reservationsAdd.php"><button class="button is-success">Add Reservations</button></a>
+               <a href="reservationsEdit.php"><button class="button is-warning">Edit Reservations</button> </a>
+               <a href="reservationsSupp.php"><button class="button is-danger">Delete Reservations</button></a> 
             </div>
             <nav class="level is-mobile">
                 <div class="level-left">
@@ -199,6 +207,7 @@ function affichageReservation()
     }
 }
 
+//PROFILE
 function profilePage()
 {
     global $conn;
@@ -222,3 +231,78 @@ function profilePage()
 <?php
     }
 }
+
+//FONCTION EDITION, AJOUT, SUPP
+function ajoutProduits($title, $content, $address, $city, $price, $images, $author, $user_id)
+{
+    global $conn;
+    // Vérification du prix (doit être un entier, et inférieur à 1 million d'euros)
+    if (is_int($price) && $price > 0 && $price < 1000000) {
+        // Utilisation du try/catch pour capturer les erreurs PDO/SQL
+        try {
+            // Création de la requête avec tous les champs du formulaire
+            $sth = $conn->prepare('INSERT INTO adverts (title,content,address,city,price,images,author,user_id) VALUES (:title, :content, :address, :city, :price, :images, :author, user_id)');
+            $sth->bindValue(':title', $title, PDO::PARAM_STR);
+            $sth->bindValue(':content', $content, PDO::PARAM_STR);
+            $sth->bindValue(':address', $address, PDO::PARAM_INT);
+            $sth->bindValue(':city', $city, PDO::PARAM_STR);
+            $sth->bindValue(':price', $price, PDO::PARAM_INT);
+            $sth->bindValue(':images', $images, PDO::PARAM_INT);
+            $sth->bindValue(':author', $author, PDO::PARAM_INT);
+            $sth->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+
+            // Affichage conditionnel du message de réussite
+            if ($sth->execute()) {
+                echo "<div class='alert alert-success'> Votre article a été ajouté à la base de données </div>";
+                header('Location: adverts.php?id='.$conn->lastInsertId());
+            }
+        } catch (PDOException $e) {
+            echo 'Error: '.$e->getMessage();
+        }
+    }
+}
+
+function modifProduits($title, $content, $address, $city, $price, $images, $author, $id, $user_id)
+{
+    global $conn;
+    if (is_int($price) && $price > 0 && $price < 1000000) {
+        try {
+            $sth = $conn->prepare('UPDATE adverts SET title=:title, content=:content, address:address, city=:city, price=:price, images=:images, author=:author WHERE ad_id=:ad_id AND user_id=:user_id');
+            $sth->bindValue(':title', $title);
+            $sth->bindValue(':content', $content);
+            $sth->bindValue(':address', $address);
+            $sth->bindValue(':city', $city);
+            $sth->bindValue(':price', $price);
+            $sth->bindValue(':images', $images);
+            $sth->bindValue(':author', $author);
+            $sth->bindValue(':ad_id', $id);
+            $sth->bindValue(':user_id', $user_id);
+            if ($sth->execute()) {
+                echo "<div class='alert alert-success'> Votre modification a bien été prise en compte </div>";
+                header("Location: adverts.php?id={$id}");
+            }
+        } catch (PDOException $e) {
+            echo 'Error: '.$e->getMessage();
+        }
+    }
+}
+
+// Fonction de suppression des produits. Les arguments renseignés sont des placeholders étant donné qu'ils seront remplacés par les véritables variables une fois la fonction appelée;
+function suppProduits($user_id, $produit_id)
+{
+    // Récupération de la connexion à la BDD à partir de l'espace global.
+    global $conn;
+
+    // Tentative de la requête de suppression.
+    try {
+        $sth = $conn->prepare('DELETE FROM products WHERE products_id = :products_id AND user_id =:user_id');
+        $sth->bindValue(':products_id', $produit_id);
+        $sth->bindValue(':user_id', $user_id);
+        if ($sth->execute()) {
+            header('Location:profile.php?s');
+        }
+    } catch (PDOException $e) {
+        echo 'Error: '.$e->getMessage();
+    }
+}
+

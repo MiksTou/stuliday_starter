@@ -41,32 +41,18 @@
                 ?>
 
 
-        <!-- <div class="navbar-dropdown">
-            <a class="navbar-item" href="aderts.php">
-              Vos annonces
-            </a>
-            <a class="navbar-item" href="#">
-              Créer une annonce
-            </a>
-            <hr class="navbar-divider">
-            <a class="navbar-item" href="reservations.php">
-              Réservation d'un objet
-            </a>
-          </div>
-        </div> -->
-
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-item" href="adverts.php">
             Vos annonces
           </a>
 
           <div class="navbar-dropdown">
-            <a class="navbar-item" href="#">
+            <a class="navbar-item" href="editAdverts.php">
               Créer une annonce
             </a>
             <hr class="navbar-divider">
             <a class="navbar-item" href="reservations.php">
-              Réservation d'un objet
+              Gestion Biens
             </a>
           </div>
         </div>
@@ -80,9 +66,6 @@
           <div class="navbar-dropdown">
             <a class="navbar-item" href="profile.php">
                Profile page
-            </a>
-            <a class="navbar-item">
-              Create a new ad
             </a>
             <hr class="navbar-divider">
             <a class="navbar-item" href="?logout">

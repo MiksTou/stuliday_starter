@@ -2,9 +2,9 @@
 
 require 'includes/header.php';
 
-$sql = 'SELECT * FROM adverts';
-$res = $conn->query($sql);
-$advets = $res->fetchAll();
+// $sql = 'SELECT * FROM adverts';
+// $res = $conn->query($sql);
+// $advets = $res->fetchAll();
 ?>
 
 
