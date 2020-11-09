@@ -50,7 +50,6 @@ function login($email, $password)
         if ($user) {
             $db_password = $user['password'];
             if (password_verify($password, $db_password)) {
-                var_dump($password);
                 $_SESSION['id'] = $user['id'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['username'] = $user['username'];

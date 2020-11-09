@@ -74,7 +74,7 @@
 
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
-            User name
+            <?php echo $_SESSION['username']; ?>
           </a>
 
           <div class="navbar-dropdown">

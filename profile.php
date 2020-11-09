@@ -1,13 +1,15 @@
 <?php
 require 'includes/header.php';
 
-if(isset($_GET['id']) AND $_GET['id'] > 0) {
 
-    global $conn;
-    $getId = intval($_GET['id']);
+    $userId = $_SESSION['id'];
     $requser = $conn->prepare('SELECT * from users WHERE id = ?');
-    $requser->execute(array($getId));
+    $requser->execute(array($userId));
     $userInfo = $requser->fetch();
+
+    if (!empty($userId)) {
+
+    
 ?>
 
 
@@ -30,14 +32,9 @@ if(isset($_GET['id']) AND $_GET['id'] > 0) {
     <h2>Pseudo = <?php echo $userInfo['username']; ?></h2>
     <br>
     <h2>Mail = <?php echo $userInfo['email']; ?></h2>
-    <?php 
-        if(isset($_SESSION['id']) AND $userInfo['id'] === $_SESSION['id']) {
-    ?>
     <h4> <a href="edtionprofil.php">Editer mon profil</a> </h4>
-    <?php 
-        } 
-    ?>
 </div>
 
 <?php
 } 
+
