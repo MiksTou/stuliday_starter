@@ -21,8 +21,10 @@
             addAdverts($title, $content, $address, $city, $price, $images, $author);
         }
         // 2nd elseif pour le formulaire de modification
+        //ICCCCCCCCIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
     } elseif (isset($_POST['adverts_edit'])) {
         echo 'bouton ok';
+        var_dump($_POST);
         // Vérification back-end du formulaire d'édition
 
         if (!empty($_POST['editNomBien']) && !empty($_POST['editDescriptionBien']) && !empty($_POST['editAdresseBien']) && !empty($_POST['editVilleBien']) && !empty($_POST['editPrixBien']) && !empty($_POST['editImages'])) {
@@ -34,19 +36,18 @@
             $city = strip_tags($_POST['editVilleBien']);
             $price = intval(strip_tags($_POST['editPrixBien']));
             $images = strip_tags($_POST['editImages']);
-            $author = $_SESSION['id'];
             // Assigne la variable user_id à partir du token de session
-            
-            // $id = strip_tags($_POST['ad_id']);
+            $users_id = $_SESSION['id'];
+            $id = strip_tags($_SESSION['ad_id']);
 
-            editAdverts($title, $content, $address, $city, $price, $images, $author, $id);
+            editAdverts($title, $content, $address, $city, $price, $images, $users_id, $id);
         }
     } elseif (isset($_POST['adverts_delete'])) {
         $adverts = $_POST['ad_id'];
         $users_id = $_SESSION['id'];
 
-        suppProduits($users_id, $product);
-    } elseif (isset($_POST['user_edit'])) {
+        suppAdverts($users_id, $adverts);
+    } elseif (isset($_POST['users_delete'])) {
         $users_id = $_POST['users_id'];
         $phone = $_POST['user_phone'];
 

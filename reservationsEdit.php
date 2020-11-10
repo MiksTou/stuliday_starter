@@ -1,27 +1,37 @@
 <?php
 
+$title = 'Reservations Add - Stuliday';
 require 'includes/header.php';
 
 $sql = 'SELECT * FROM reservations';
 $res = $conn->query($sql);
-$reservations = $res->fetchAll();
-// MODIFIER HTML ____-------------------_________________-------------------------------------------------------------------
+$adverts = $res->fetchAll();
 ?>
 
-
+<section class="hero is-warning">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Edition de vos réservations
+      </h1>
+      <h2 class="subtitle">
+      Cette page vous permet d'éditer vos réservations de biens
+      </h2>
+    </div>
+  </div>
+</section>
 
 <div class="container">
-    <div class="columns">
+    <div class="row">
         <div class="column">
-            <!-- REGISTER --------------------- -->
             <form
-                action="<?php $_SERVER['REQUEST_URI']; ?>"
+                action="process.php"
                 method="post">
                 <div class="field">
-                    <label class="label" for="nomBienAjout">Nom de votre bien</label>
+                    <label class="label" for="editEmail">Editez votre email</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="text" placeholder="Saisissez le nom de votre bien" value=""
-                            id="nomBienAjout" name="nomBienAjout" required>
+                        <input class="input" type="text" placeholder="Saisissez votre nouveau email" value=""
+                            id="editEmail" name="editEmail" required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-envelope"></i>
                         </span>
@@ -32,10 +42,10 @@ $reservations = $res->fetchAll();
                 </div>
 
                 <div class="field">
-                    <label class="label" for="descriptionBienAjout">Description du bien</label>
+                    <label class="label" for="editFullname">Editez votre nom et prénom</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="text" placeholder="Décriver précisément votre bien" value=""
-                            name="descriptionBienAjout" required>
+                        <input class="input" type="text" placeholder="Editez votre nom et votre prénom" value=""
+                            name="editFullname" required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-envelope"></i>
                         </span>
@@ -46,10 +56,10 @@ $reservations = $res->fetchAll();
                 </div>
 
                 <div class="field">
-                    <label class="label" for="prixBienAjout">Prix de votre article en €</label>
+                    <label class="label" for="editPhone">Editez votre numéro de téléphone</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="text" placeholder="Veuillez indiquer le prix de votre bien" value=""
-                            name="prixBienAjout" required>
+                        <input class="input" type="text" placeholder="Editez votre numéro de téléphone" value=""
+                            name="phone" required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-envelope"></i>
                         </span>
@@ -60,10 +70,10 @@ $reservations = $res->fetchAll();
                 </div>
 
                 <div class="field">
-                    <label class="label" for="villeBienAjout">Ville où le bien est situé</label>
+                    <label class="label" for="editMessage">Editez votre message</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="text" placeholder="Indiquer la localisation de votre bien" value=""
-                            name="villeBienAjout" required>
+                        <input class="input" type="text" placeholder="Editez votre message" value=""
+                            name="editMessage" required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-envelope"></i>
                         </span>
@@ -73,85 +83,9 @@ $reservations = $res->fetchAll();
                     </div>
                 </div>
 
-                <div class="field">
-                    <label class="label" for="categorieBienAjout">Catégorie du bien</label>
-                    <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="text" placeholder="Indiquer la catégorie de votre bien" value=""
-                            name="categorieBienAjout" required>
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-envelope"></i>
-                        </span>
-                        <span class="icon is-small is-right">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </span>
-                    </div>
-                </div>
+                <button type="submit" class="button is-dark" name="add_reservations_submit">Confirmer l'édition de votre réservation</button>
 
-                <div class="field">
-                    <div class="control">
-                        <label class="checkbox">
-                            <input type="checkbox" required>
-                            I agree to the <a href="#">terms and conditions</a>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="InputCategory">Catégorie de l'article</label>
-                    <select class="form-control" id="InputCategory" name="product_category">
-                        <?php foreach ($reservations as $reservation) { ?>
-                        <option
-                            value="<?php echo $reservation['reservation_id']; ?>">
-                            <?php echo $reservation['full_name']; ?>
-                        </option>
-                        <?php } ?>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-success" name="product_submit">Enregistrer l'article</button>
-            </form>
-        </div>
-
-    </div>
-</div>
-
-
-<!-- <div class="row">
-    <div class="col-12">
-        <form action="process.php" method="POST">
-            <div class="form-group">
-                <label for="InputName">Nom de votre bien</label>
-                <input type="text" class="form-control" id="InputName" placeholder="Nom de votre article"
-                    name="product_name" required>
-            </div>
-            <div class="form-group">
-                <label for="InputDescription">Description du bien</label>
-                <textarea class="form-control" id="InputDescription" rows="3" name="product_description"
-                    required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="InputPrice">Prix du bien</label>
-                <input type="number" max="999999" class="form-control" id="InputPrice"
-                    placeholder="Prix de votre article en €" name="product_price" required>
-            </div>
-            <div class="form-group">
-                <label for="InputPrice">Ville où le bien est situé</label>
-                <input type="text" class="form-control" id="InputPrice" placeholder="Ville où l'article est situé"
-                    name="product_city" required>
-            </div>
-            <div class="form-group">
-                <label for="InputCategory">Catégorie du bien</label>
-                <select class="form-control" id="InputCategory" name="product_category">
-                   // <?php foreach ($categories as $category) { ?>
-<option
-    value="<?php echo $category['categories_id']; ?>">
-    <?php echo $category['categories_name']; ?>
-</option>
-<?php } ?>
-</select>
-
-</div>
-</div> -->
-
+                
 
 <?php
 require 'includes/footer.php';

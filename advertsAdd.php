@@ -7,6 +7,20 @@ $sql = 'SELECT * FROM adverts';
 $res = $conn->query($sql);
 $adverts = $res->fetchAll();
 ?>
+
+<section class="hero is-success">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Ajout d'annnonces de biens
+      </h1>
+      <h2 class="subtitle">
+      Cette page vous permet d'ajouter des annonces de vos biens
+      </h2>
+    </div>
+  </div>
+</section>
+
 <div class="container">
     <div class="row">
         <div class="column">
@@ -100,7 +114,7 @@ $adverts = $res->fetchAll();
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-success" name="adverts_submit">Enregistrer votre bien</button>
+                <button type="submit" class="button is-dark" name="adverts_submit">Enregistrer votre bien</button>
 
                 
 

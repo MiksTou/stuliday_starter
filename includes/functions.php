@@ -50,11 +50,11 @@ function login($email, $password)
         if ($user) {
             $db_password = $user['password'];
             if (password_verify($password, $db_password)) {
-                $_SESSION['id'] = $user['id'];
+                $_SESSION['users_id'] = $user['users_id'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['username'] = $user['username'];
                 echo '<div class="alert alert-success" role="alert">Vous êtes connecté !</div>';
-                header('Location: profile.php?id=' . $_SESSION['id']);
+                header('Location: profile.php?id=' . $_SESSION['users_id']);
             } else {
                 echo '<div class="alert alert-danger" role="alert">Mot de passe erroné !</div>';
                 unset($_POST);
@@ -328,23 +328,22 @@ function addAdverts($title, $content, $address, $city, $price, $images, $author)
     }
 }
 
-function editAdverts($title, $content, $address, $city, $price, $images, $author, $id)
+function editAdverts($title, $content, $address, $city, $price, $images, $id, $users_id)
 {
     global $conn;
     if (is_int($price) && $price > 0 && $price < 1000000) {
         try {
-            $sth = $conn->prepare('UPDATE adverts SET title=:title, content=:content, address:address, city=:city, price=:price, images=:images, author=:author WHERE ad_id=:ad_id AND author=:author');
-            $sth->bindValue(':title', $title, PDO::PARAM_STR);
-            $sth->bindValue(':content', $content, PDO::PARAM_STR);
-            $sth->bindValue(':address', $address, PDO::PARAM_STR);
-            $sth->bindValue(':city', $city, PDO::PARAM_STR);
-            $sth->bindValue(':price', $price, PDO::PARAM_INT);
-            $sth->bindValue(':images', $images, PDO::PARAM_STR);
-            $sth->bindValue(':author', $author, PDO::PARAM_INT);
-            // $sth->bindValue(':ad_id', $id);
+            $sth = $conn->prepare('UPDATE adverts SET title=:title, content=:content, address=:address, city=:city, price=:price, images=:images WHERE ad_id= $id AND author= $users_id');
+            $sth->bindValue(':title', $title);
+            $sth->bindValue(':content', $content);
+            $sth->bindValue(':address', $address);
+            $sth->bindValue(':city', $city);
+            $sth->bindValue(':price', $price);
+            $sth->bindValue(':images', $images);
+            $sth->bindValue(':ad_id', $id);
+            $sth->bindValue(':author', $_SESSION['id']);
             if ($sth->execute()) {
-                echo "<div class='alert alert-success'> Votre modification a bien été prise en compte </div>";
-                header("Location: adverts.php?id={$id}");
+                header("Location: adverts.php");
             }
         } catch (PDOException $e) {
             echo 'Error: '.$e->getMessage();
@@ -353,7 +352,7 @@ function editAdverts($title, $content, $address, $city, $price, $images, $author
 }
 
 // Fonction de suppression des produits. Les arguments renseignés sont des placeholders étant donné qu'ils seront remplacés par les véritables variables une fois la fonction appelée;
-function suppProduits($user_id, $produit_id)
+function suppAdverts($users_id, $adverts)
 {
     // Récupération de la connexion à la BDD à partir de l'espace global.
     global $conn;
@@ -361,7 +360,7 @@ function suppProduits($user_id, $produit_id)
     // Tentative de la requête de suppression.
     try {
         $sth = $conn->prepare('DELETE FROM adverts WHERE ad_id = :ad_id AND users_id =:users_id');
-        $sth->bindValue(':ad_id', $ad_id);
+        $sth->bindValue(':ad_id', $adverts);
         $sth->bindValue(':users_id', $users_id);
         if ($sth->execute()) {
             header('Location:profile.php?s');

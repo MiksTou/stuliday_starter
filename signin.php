@@ -31,6 +31,7 @@ if (!empty($_POST['email_signup']) && !empty($_POST['password1_signup']) && !emp
             <form
                 action="<?php $_SERVER['REQUEST_URI']; ?>"
                 method="post">
+                
                 <div class="field">
                     <label class="label" for="email_signup">Email</label>
                     <div class="control has-icons-left has-icons-right">
@@ -45,12 +46,18 @@ if (!empty($_POST['email_signup']) && !empty($_POST['password1_signup']) && !emp
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="username_signup">Username</label>
-                    <input type="text" class="form-control" id="username_signup" aria-describedby="userHelp"
-                        name="username_signup" required>
-                    <small id="textHelp" class="form-text text-muted">Choisissez un nom d'utilisateur, il doit être
-                        unique</small>
+                <div class="field">
+                    <label class="label" for="username_signup">Username</label>
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input" type="text" placeholder="Type your username" value="" id="username_signup"
+                            name="username_signup" required>
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                        <span class="icon is-small is-right">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="field">

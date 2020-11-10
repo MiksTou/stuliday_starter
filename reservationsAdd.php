@@ -7,6 +7,20 @@ $sql = 'SELECT * FROM reservations';
 $res = $conn->query($sql);
 $adverts = $res->fetchAll();
 ?>
+
+<section class="hero is-success">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Réservations de biens
+      </h1>
+      <h2 class="subtitle">
+      Cette page vous permet de reserver des biens
+      </h2>
+    </div>
+  </div>
+</section>
+
 <div class="container">
     <div class="row">
         <div class="column">
@@ -69,7 +83,7 @@ $adverts = $res->fetchAll();
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-success" name="add_reservations_submit">Enregistrer votre bien</button>
+                <button type="submit" class="button is-dark" name="add_reservations_submit">Enregistrer votre réservation</button>
 
                 
 

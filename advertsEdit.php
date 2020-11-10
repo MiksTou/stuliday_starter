@@ -3,10 +3,24 @@
 $title = 'Averts Edit - Stuliday';
 require 'includes/header.php';
 
-$sql = 'SELECT * FROM adverts';
-$res = $conn->query($sql);
-$adverts = $res->fetchAll();
+$sql1 = 'SELECT * FROM adverts';
+$res1 = $conn->query($sql1);
+$adverts = $res1->fetch(PDO::FETCH_ASSOC);
 ?>
+
+<section class="hero is-warning">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Edition d'annonce
+      </h1>
+      <h2 class="subtitle">
+      Cette page vous permet d'éditer vos annonces
+      </h2>
+    </div>
+  </div>
+</section>
+
 <div class="container">
     <div class="row">
         <div class="column">
@@ -17,7 +31,7 @@ $adverts = $res->fetchAll();
                     <label class="label" for="editNomBien">Nouveau nom de votre bien</label>
                     <div class="control has-icons-left has-icons-right">
                         <input class="input" type="text" placeholder="Saisissez le nouveau nom de votre bien" value=""
-                            id="editNomBien" name="editBien" required>
+                            id="editNomBien" name="editNomBien" required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-envelope"></i>
                         </span>
@@ -97,7 +111,7 @@ $adverts = $res->fetchAll();
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-success" name="adverts_edit">Enregistrer les modifications</button>
+                <button type="submit" class="button is-dark" name="adverts_edit">Enregistrer les modifications</button>
 
                 
 
