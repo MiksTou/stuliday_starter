@@ -70,6 +70,71 @@ function login($email, $password)
 
 //AFFICHAGE
 
+function viewAdmin()
+{
+    global $conn;
+    $sth = $conn->prepare('SELECT * FROM users');
+    $sth->execute();
+    $adminViews = $sth->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($adminViews as $adminView) {
+        $users_id = $adminView['users_id'];
+        $email = $adminView['email'];
+        $username = $adminView['username'];
+    ?>
+
+
+
+<div class="box">
+    <article class="media">
+        <div class="media-left">
+            <figure class="image is-64x64">
+                <img src="images/userImg.jpg" alt="Image">
+            </figure>
+        </div>
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong><?php echo $users_id; ?></strong>
+                    <strong><?php echo $email; ?></strong>
+                    <strong><?php echo $username; ?></strong>
+                </p>
+            </div>
+
+            <div class="buttons">
+                <button class="button is-info">View Users</button>
+                <a href="advertsAdd.php"><button class="button is-success">Add Users</button></a>
+               <a href="advertsEdit.php"><button class="button is-warning">Edit Users</button></a> 
+               <a href="advertsSupp.php"><button class="button is-danger">Delete Users</button></a> 
+            </div>
+            <nav class="level is-mobile">
+                <div class="level-left">
+                    <a class="level-item" aria-label="reply">
+                        <span class="icon is-small">
+                            <i class="fas fa-reply" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                    <a class="level-item" aria-label="retweet">
+                        <span class="icon is-small">
+                            <i class="fas fa-retweet" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                    <a class="level-item" aria-label="like">
+                        <span class="icon is-small">
+                            <i class="fas fa-heart" aria-hidden="true"></i>
+                        </span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </article>
+</div>
+
+
+<?php
+    }
+}
+
+
 function affichageAdverts()
 {
     global $conn;
@@ -150,7 +215,7 @@ function affichageReservation()
     $reservations = $sth->fetchAll(PDO::FETCH_ASSOC);
     foreach ($reservations as $reservation) {
         $email = $reservation['email'];
-        $fullname = $reservation['full_name'];
+        $fullname = $reservation['fullname'];
         $phone = $reservation['phone'];
         $message = $reservation['message']; 
 ?>
@@ -159,7 +224,7 @@ function affichageReservation()
     <article class="media">
         <div class="media-left">
             <figure class="image is-64x64">
-                <img src="images/appart.jpg" alt="Image">
+                <img src="images/resa.jpg" alt="Image">
             </figure>
         </div>
         <div class="media-content">
@@ -233,7 +298,9 @@ function profilePage()
 }
 
 //FONCTION EDITION, AJOUT, SUPP
-function ajoutProduits($title, $content, $address, $city, $price, $images, $author, $user_id)
+
+// ADVERTS ---------------------------------------
+function addAdverts($title, $content, $address, $city, $price, $images, $author)
 {
     global $conn;
     // Vérification du prix (doit être un entier, et inférieur à 1 million d'euros)
@@ -241,15 +308,14 @@ function ajoutProduits($title, $content, $address, $city, $price, $images, $auth
         // Utilisation du try/catch pour capturer les erreurs PDO/SQL
         try {
             // Création de la requête avec tous les champs du formulaire
-            $sth = $conn->prepare('INSERT INTO adverts (title,content,address,city,price,images,author,user_id) VALUES (:title, :content, :address, :city, :price, :images, :author, user_id)');
+            $sth = $conn->prepare('INSERT INTO adverts (title,content,address,city,price,images,author) VALUES (:title, :content, :address, :city, :price, :images, :author)');
             $sth->bindValue(':title', $title, PDO::PARAM_STR);
             $sth->bindValue(':content', $content, PDO::PARAM_STR);
-            $sth->bindValue(':address', $address, PDO::PARAM_INT);
+            $sth->bindValue(':address', $address, PDO::PARAM_STR);
             $sth->bindValue(':city', $city, PDO::PARAM_STR);
             $sth->bindValue(':price', $price, PDO::PARAM_INT);
-            $sth->bindValue(':images', $images, PDO::PARAM_INT);
+            $sth->bindValue(':images', $images, PDO::PARAM_STR);
             $sth->bindValue(':author', $author, PDO::PARAM_INT);
-            $sth->bindValue(':user_id', $user_id, PDO::PARAM_INT);
 
             // Affichage conditionnel du message de réussite
             if ($sth->execute()) {
@@ -262,21 +328,20 @@ function ajoutProduits($title, $content, $address, $city, $price, $images, $auth
     }
 }
 
-function modifProduits($title, $content, $address, $city, $price, $images, $author, $id, $user_id)
+function editAdverts($title, $content, $address, $city, $price, $images, $author, $id)
 {
     global $conn;
     if (is_int($price) && $price > 0 && $price < 1000000) {
         try {
-            $sth = $conn->prepare('UPDATE adverts SET title=:title, content=:content, address:address, city=:city, price=:price, images=:images, author=:author WHERE ad_id=:ad_id AND user_id=:user_id');
-            $sth->bindValue(':title', $title);
-            $sth->bindValue(':content', $content);
-            $sth->bindValue(':address', $address);
-            $sth->bindValue(':city', $city);
-            $sth->bindValue(':price', $price);
-            $sth->bindValue(':images', $images);
-            $sth->bindValue(':author', $author);
-            $sth->bindValue(':ad_id', $id);
-            $sth->bindValue(':user_id', $user_id);
+            $sth = $conn->prepare('UPDATE adverts SET title=:title, content=:content, address:address, city=:city, price=:price, images=:images, author=:author WHERE ad_id=:ad_id AND author=:author');
+            $sth->bindValue(':title', $title, PDO::PARAM_STR);
+            $sth->bindValue(':content', $content, PDO::PARAM_STR);
+            $sth->bindValue(':address', $address, PDO::PARAM_STR);
+            $sth->bindValue(':city', $city, PDO::PARAM_STR);
+            $sth->bindValue(':price', $price, PDO::PARAM_INT);
+            $sth->bindValue(':images', $images, PDO::PARAM_STR);
+            $sth->bindValue(':author', $author, PDO::PARAM_INT);
+            // $sth->bindValue(':ad_id', $id);
             if ($sth->execute()) {
                 echo "<div class='alert alert-success'> Votre modification a bien été prise en compte </div>";
                 header("Location: adverts.php?id={$id}");
@@ -295,9 +360,9 @@ function suppProduits($user_id, $produit_id)
 
     // Tentative de la requête de suppression.
     try {
-        $sth = $conn->prepare('DELETE FROM products WHERE products_id = :products_id AND user_id =:user_id');
-        $sth->bindValue(':products_id', $produit_id);
-        $sth->bindValue(':user_id', $user_id);
+        $sth = $conn->prepare('DELETE FROM adverts WHERE ad_id = :ad_id AND users_id =:users_id');
+        $sth->bindValue(':ad_id', $ad_id);
+        $sth->bindValue(':users_id', $users_id);
         if ($sth->execute()) {
             header('Location:profile.php?s');
         }
@@ -306,3 +371,27 @@ function suppProduits($user_id, $produit_id)
     }
 }
 
+//RESERVATIONS -------------------------------------------------------
+
+function addReservations($email, $fullname, $phone, $message)
+{
+    global $conn;
+        // Utilisation du try/catch pour capturer les erreurs PDO/SQL
+        try {
+            // Création de la requête avec tous les champs du formulaire
+
+            $sth = $conn->prepare('INSERT INTO reservations (email,fullname,phone,message) VALUES (:email, :fullname, :phone, :message)');
+            $sth->bindValue(':email', $email, PDO::PARAM_STR);
+            $sth->bindValue(':fullname', $fullname, PDO::PARAM_STR);
+            $sth->bindValue(':phone', $phone, PDO::PARAM_INT);
+            $sth->bindValue(':message', $message, PDO::PARAM_STR);
+
+            // Affichage conditionnel du message de réussite
+            if ($sth->execute()) {
+                echo "<div class='alert alert-success'> Votre reservations a bien été effectuée </div>";
+                header('Location: reservations.php?id='.$conn->lastInsertId());
+            }
+        } catch (PDOException $e) {
+            echo 'Error: '.$e->getMessage();
+        }
+    }

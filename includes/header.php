@@ -43,7 +43,7 @@
 
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-item" href="adverts.php">
-            Vos annonces
+            Vos annonces de bien
           </a>
 
           <div class="navbar-dropdown">
@@ -52,7 +52,7 @@
             </a>
             <hr class="navbar-divider">
             <a class="navbar-item" href="reservations.php">
-              Gestion Biens
+              Reservations bien
             </a>
           </div>
         </div>

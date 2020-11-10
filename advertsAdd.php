@@ -1,6 +1,6 @@
 <?php
 
-$title = 'ADVERTS - Stuliday';
+$title = 'Adverts Add - Stuliday';
 require 'includes/header.php';
 
 $sql = 'SELECT * FROM adverts';
@@ -100,22 +100,7 @@ $adverts = $res->fetchAll();
                     </div>
                 </div>
 
-              
-                <div class="field">
-                    <label class="label" for="author">Author</label>
-                    <div class="control has-icons-left has-icons-right">
-                        <input class="input" type="text" placeholder="" value=""
-                            name="author" required>
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-envelope"></i>
-                        </span>
-                        <span class="icon is-small is-right">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </span>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-success" name="adverts_submit">Enregistrer l'article</button>
+                <button type="submit" class="btn btn-success" name="adverts_submit">Enregistrer votre bien</button>
 
                 
 
